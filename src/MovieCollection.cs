@@ -202,22 +202,59 @@ public class MovieCollection : IMovieCollection
 	}
 
 
-
+	// Needs Rewrite
     public int NoDVDs()
 	{
+	    int totalDVDs = 0;
+	    Stack<BTreeNode> stack = new Stack<BTreeNode>();
+	    BTreeNode? curr = root;
 
-    }
+	    // Traverse the tree in inorder and sum up the number of DVDs of each movie
+	    while (curr != null || stack.Count > 0)
+	    {
+	        while (curr != null)
+	        {
+	            stack.Push(curr);
+	            curr = curr.LChild;
+	        }
 
-   
+	        curr = stack.Pop();
+	        totalDVDs += curr.Movie.NumberDVDs;
+	        curr = curr.RChild;
+	    }
+
+	    return totalDVDs;
+	}
+
+	// Needs Rewrite
     public IMovie[] ToArray()
 	{
+		IMovie[] movies = new IMovie[count];
+	    int i = 0;
+	    Stack<BTreeNode> stack = new Stack<BTreeNode>();
+	    BTreeNode? curr = root;
 
-    }
+	    // Traverse the tree in inorder and add each movie to the array
+	    while (curr != null || stack.Count > 0)
+	    {
+	        while (curr != null)
+	        {
+	            stack.Push(curr);
+	            curr = curr.LChild;
+	        }
+
+	        curr = stack.Pop();
+	        movies[i++] = curr.Movie;
+	        curr = curr.RChild;
+	    }
+
+	    return movies;
+	}
 
 
 	public void Clear()
 	{
-
+		root = null;
     }
 }
 

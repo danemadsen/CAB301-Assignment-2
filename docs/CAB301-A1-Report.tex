@@ -1,0 +1,426 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[none]{hyphenat}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\definecolor{darkgreen}{RGB}{0, 150, 0}
+
+\begin{document}
+	\begin{titlepage}
+		
+		\begin{center}
+			\includegraphics[width=0.5\textwidth]{QUT.jpg}\\
+			[0.03\textheight]  
+			\Large\textbf{Bachelor of IT (Computer Science)}\\
+			\Large\textbf{Assignment 1}\\
+			\large\textbf{CAB301 - Algorithms and Complexity}\\
+			[0.02\textheight]
+			\large\textsl{Dane Madsen}\\
+			\large\textsl{n10983864@qut.edu.au}
+		\end{center}
+		
+	\end{titlepage}
+	\tableofcontents
+	\newpage
+	
+	\section{IsValidId Method}
+		\subsection{Algorithm Design}
+			This method checks whether a provided job ID is valid. It achieves this 
+			by checking that the provided ID is greater than the minimum valid ID (1) and 
+			less than the maximum valid ID (999). If the ID is meets these criteria, the 
+			method returns true indicating the ID is valid, otherwise it returns false 
+			indicating the ID is invalid.\\
+
+			\textbf{ALGORITHM} \textit{IsValidId(v)}\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns True if \textit{v} is a valid job ID\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{if} \textit{$v \geq 1$} \textbf{and} \textit{$v \leq 999$}\\
+			\null\hspace{2cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textbf{return} \textit{False}\\
+
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly validating the 
+			job ID. Using a for loop, the unit test first tests every valid ID (1-999) to ensure that 
+			the method returns true. It then tests two invalid IDs (0 and 1000) to ensure that the method 
+			returns false.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{IsValidExecutionTime Method}
+		\subsection{Algorithm Design}
+			This method simply checks whether a provided job execution time is valid. It achieves 
+			this by simply checking whether the execution time is greater than 0. If the execution 
+			time is greater than 0, the method returns true indicating the execution time is valid,
+			otherwise it returns false indicating the execution time is invalid.\\
+
+			\textbf{ALGORITHM} \textit{IsValidExecutionTime(v)}\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns True if \textit{v} is a valid job execution time\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{if} \textit{$v > 0$}\\
+			\null\hspace{2cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textbf{return} \textit{False}
+
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly validating the 
+			job execution time. Using a for loop, the unit test first tests 100 valid execution times 
+			(1-100) to ensure that the method returns true. It then tests one invalid execution time 
+			(0) to ensure that the method returns false.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{IsValidPriority Method}
+		\subsection{Algorithm Design}
+			This method checks whether a provided job priority is valid. It achieves this by 
+			checking that the provided priority is greater than or equal to the minimum valid priority (1) and 
+			less than or equal to the maximum valid priority (9). If the priority is meets these criteria, the 
+			method returns true indicating the priority is valid, otherwise it returns false 
+			indicating the priority is invalid.\\
+
+			\textbf{ALGORITHM} \textit{IsValidPriority(v)}\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns True if \textit{v} is a valid job priority\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{if} \textit{$v \geq 1$} \textbf{and} \textit{$v \leq 9$}\\
+			\null\hspace{2cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textbf{return} \textit{False}\\
+			
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly validating the 
+			job priority. Using a for loop, the unit test first tests every valid priority (1-9) to ensure that 
+			the method returns true. It then tests two invalid priorities (0 and 10) to ensure that the method 
+			returns false.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{IsTimeReceived Method}
+		\subsection{Algorithm Design}
+			This method checks whether a provided job time received is valid. It achieves this by
+			checking that the provided time received is greater than zero. If the time received is
+			greater than zero, the method returns true indicating the time received is valid, otherwise
+			it returns false indicating the time received is invalid.\\
+
+			\textbf{ALGORITHM} \textit{IsTimeReceived(v)}\\
+			\null\hspace{1cm}// Given a job time received (\textit{v})\\
+			\null\hspace{1cm}// Returns True if \textit{v} is a valid time received\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{if} \textit{$v > 0$}\\
+			\null\hspace{2cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textbf{return} \textit{False}
+		
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly validating the 
+			job time received. Using a for loop, the unit test first tests 100 valid time received 
+			(1-100) to ensure that the method returns true. It then tests one invalid time received 
+			(0) to ensure that the method returns false.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+			
+	\section{Add Method}
+		\subsection{Algorithm Design}
+			This method adds a job to the job collection. It achieves this by first checking that the job 
+			doesn't already exist in the collection. If the job does already exist in the collection, the 
+			method returns false indicating the job was not added to the collection. If the job does not 
+			already exist in the collection, the method adds the job to the collection, increments the count 
+			variable and returns true.\\
+
+			\textbf{ALGORITHM} \textit{Add(v)}\\
+			\null\hspace{1cm}// Let (\textit{n}) be count\\
+			\null\hspace{1cm}// Given a job (\textit{v})\\
+			\null\hspace{1cm}// Returns True if \textit{v} was added to the jobs array (\textit{J})\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{n - 1} \textbf{do}\\
+			\null\hspace{2cm}\textbf{if} \textit{$v.id = J[i].id$}\\
+			\null\hspace{3cm}\textbf{return} \textit{False}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textit{$J[n] \gets v$}\\
+			\null\hspace{2cm}\textit{$n \gets n + 1$}\\
+			\null\hspace{2cm}\textbf{return} \textit{True}\\
+
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly adding jobs to the 
+			collection. First, the unit test creates a job with valid properties, and then creates 
+			a job collection. The unit test then attempts to add the job to the job 
+			collection. If this first attempt is successful, the unit test then attempts to add the 
+			job to the job collection again. If the second attempt is unsuccessful, the unit test 
+			passes. This ensures that the method can add a new job, but will not overwrite a job if a job in 
+			the job collection already has the same ID as the job being added.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{Contains Method}
+		\subsection{Algorithm Design}
+			This method is used to check if a job exists in the job collection. It achieves this by 
+			checking if there is a job in the collection with the same ID as the provided job ID. If there is 
+			a job with the same ID the method returns true, otherwise it returns false.\\
+
+			\textbf{ALGORITHM} \textit{Contains(v)}\\
+			\null\hspace{1cm}// Let (\textit{n}) be count\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns True if a job with the ID \textit{v} exists in the jobs array (\textit{J})\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{n - 1} \textbf{do}\\
+			\null\hspace{2cm}\textbf{if} \textit{$v = J[i].id$}\\
+			\null\hspace{3cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{else}\\
+			\null\hspace{2cm}\textbf{return} \textit{False}
+			
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly checking if a job exists in 
+			the collection. First, the unit test creates a job with valid properties, and then creates 
+			a job collection. Before adding the job to the job collection, the unit test 
+			first checks that the job does not exist in the job collection. If the job 
+			does not exist in the job collection, the unit test then adds the job to the 
+			job collection. Finally, the unit test again checks that the job exists in the job 
+			collection. If the job exists in the job collection, the unit test passes. This 
+			ensures that jobs are created independantly of the job collection, and that the job collection 
+			can correctly check if a job exists in the collection.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{Find Method}
+		\subsection{Algorithm Design}
+			This method is used to find a job in the job collection. It achieves this by using the provided 
+			job ID to find the job in the collection. If the job is found, the method returns the job, 
+			otherwise it returns null.\\
+
+			\textbf{ALGORITHM} \textit{Find(v)}\\
+			\null\hspace{1cm}// Let (\textit{n}) be count\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns the job with the ID \textit{v} if it exists in the jobs array (\textit{J})\\
+			\null\hspace{1cm}// Otherwise returns null\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{n - 1} \textbf{do}\\
+			\null\hspace{2cm}\textbf{if} \textit{$v = J[i].id$}\\
+			\null\hspace{3cm}\textbf{return} \textit{J[i]}\\
+			\null\hspace{1cm}\textbf{return} \textit{null}\\
+
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly finding a job in the 
+			collection. First, the unit test creates a job with valid properties, and then creates 
+			a job collection. Before adding the job to the job collection, the unit test 
+			first checks that the job cannot be found in the job collection. If the job 
+			cannot be found in the job collection, the unit test then adds the job to the 
+			job collection. Finally, the unit test again checks that the job can be found in the 
+			job collection. If the job can be found in the job collection, the unit test passes. 
+			This ensures that the job collection can correctly find a job in the collection.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{Remove Method}
+		\subsection{Algorithm Design}
+			This method is used to remove a job from the job collection. It achieves this by using the 
+			provided job ID to find the job in the collection. If the job is found, the method removes the 
+			job from the collection, decrements the count variable and returns true. If the job is not found, 
+			the method returns false.\\
+
+			\textbf{ALGORITHM} \textit{Remove(v)}\\
+			\null\hspace{1cm}// Let (\textit{n}) be count\\
+			\null\hspace{1cm}// Given an integer (\textit{v})\\
+			\null\hspace{1cm}// Returns True if a job with the ID \textit{v} was removed\\
+			\null\hspace{1cm}// from the jobs array (\textit{J})\\
+			\null\hspace{1cm}// Otherwise returns False\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{n - 1} \textbf{do}\\
+			\null\hspace{2cm}\textbf{if} \textit{$v = J[i].id$}\\
+			\null\hspace{4cm}\textbf{for} \textit{$j \gets 0$} \textbf{in} \textit{n - 2} \textbf{do}\\
+			\null\hspace{5cm}\textit{$J[j] \gets J[j + 1]$}\\
+			\null\hspace{4cm}\textit{$n \gets n - 1$}\\
+			\null\hspace{4cm}\textbf{return} \textit{True}\\
+			\null\hspace{1cm}\textbf{return} \textit{False}\\
+			
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly removing a job from the 
+			collection. First, the unit test creates a job with valid properties, and then creates 
+			a job collection. Before adding the job to the job collection, the unit test 
+			first attemmps to remove the job from the job collection. If the job cannot 
+			be removed from the job collection, the unit test then adds the job to the 
+			job collection. Finally, the unit test again attempts to remove the job from the 
+			job collection. If the job can be removed from the job collection, the unit test 
+			passes. This ensures that the job collection can correctly remove a job from the collection.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+			
+	\section{ToArray Method}
+		\subsection{Algorithm Design}
+			This method is used to convert the job collection to an array. It achieves this by creating a 
+			new array of the same size as the job collection and then copying the jobs from the job 
+			collection to the new array. The method then returns the new array.\\
+
+			\textbf{ALGORITHM} \textit{ToArray()}\\
+			\null\hspace{1cm}// Let (\textit{n}) be count\\
+			\null\hspace{1cm}// Returns a new array of copied from the jobs array (\textit{J})\\
+			\null\hspace{1cm}\textit{$A \gets new Job[n]$}\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{n - 1} \textbf{do}\\
+			\null\hspace{2cm}\textit{$A[i] \gets J[i]$}\\
+			\null\hspace{1cm}\textbf{return} \textit{A}\\
+		
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly converting the job 
+			collection to an array. First, the unit test creates a job with valid properties, and 
+			then creates a job collection. Before adding the job to the job collection, 
+			the unit test first creates an array from the job collection and checks that is empty. 
+			If the array is empty, the unit test then adds the job to the job collection and 
+			then again creates an array from the job collection. Finally, the unit test checks that 
+			the array contains a single job. If the array contains a single job, the unit test passes. 
+			This ensures that the job collection can correctly convert the job collection to an array, and 
+			that the array contains the same ammount of jobs as the job collection.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+	
+	\section{FirstComeFirstServed Method}
+		\subsection{Algorithm Design}
+			This method is used to sort jobs for first come first served scheduling. It achieves 
+			this by using the selection sort algorithm to sort the jobs by their arrival time.\\
+
+			\textbf{ALGORITHM} \textit{FirstComeFirstServed()}\\
+			\null\hspace{1cm}// Returns a new array of jobs sorted by their arrival time\\
+			\null\hspace{1cm}\textit{$A \gets Jobs.ToArray()$}\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{A.Length - 1} \textbf{do}\\
+			\null\hspace{2cm}\textbf{for} \textit{$j \gets i + 1$} \textbf{in} \textit{A.Length} \textbf{do}\\
+			\null\hspace{3cm}\textbf{if} \textit{$A[i].TimeRecieved > A[j].TimeRecieved$}\\
+			\null\hspace{4cm}\textit{$temp \gets A[i]$}\\
+			\null\hspace{4cm}\textit{$A[i] \gets A[j]$}\\
+			\null\hspace{4cm}\textit{$A[j] \gets temp$}\\
+			\null\hspace{1cm}\textbf{return} \textit{A}\\
+		
+		\subsection{Analysis}
+			To implement selection sort, this method uses a nested for loop to iterate through the
+			array of jobs. The outer loop performs n - 1 iterations, and the inner loop performs 
+			1, 2, ..., n - 2, n - 1 iterations for every iteration of the outer loop, where n is 
+			the length of the jobs array. Therefore, the total number of iterations can be expressed as 
+			1 + 2 + ... + (n - 2) + (n - 1), and using the rule of sum of an arithmetic sequence 
+			this equation can be further simplified to n(n - 1)/2. By dropping the constant factor and 
+			the lower order terms, the total number of iterations can be expressed as O($n ^ 2$). Therefore, 
+			the worst case time complexity of this method is O($n ^ 2$).\\
+			
+		\newpage
+
+		\subsection{Testing}
+			This method uses unit testing to test that the method is correctly sorting the jobs by 
+			their arrival time. First, the unit test creates an empty job array and then creates a 
+			job collection. Next, nine jobs are created with valid properties and added to the 
+			empty job array. The unit test then adds the jobs from the job array to the Jobs collection 
+			in reverse order, this is to ensure the jobs are not already sorted by their arrival time.\\\\
+			Next, a scheduler is created using the Jobs collection, and a new job array is created 
+			using the FirstComeFirstServed method. The unit test then checks that every job in the 
+			new job array exists in their repective index in the job array. It also checks that every job is
+			distinct by checking an identicle job does not exist at any other index. If these conditions are 
+			met the unit test passes.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+	\section{Priority Method}
+		\subsection{Algorithm Design}
+			This method is used to sort jobs for priority scheduling. It achieves this by using the 
+			insertion sort algorithm to sort the jobs by their priority.\\
+			
+			\textbf{ALGORITHM} \textit{Priority()}\\
+			\null\hspace{1cm}// Returns a new array of jobs sorted by their priority\\
+			\null\hspace{1cm}\textit{$A \gets Jobs.ToArray()$}\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 1$} \textbf{in} \textit{A.Length} \textbf{do} \textit{$i++$}\\
+			\null\hspace{2cm}\textbf{for} \textit{$j \gets i$} \textbf{in} \textit{0} \textbf{do} \textit{$j--$}\\
+			\null\hspace{3cm}\textbf{if} \textit{$A[j].Priority < A[j - 1].Priority$}\\
+			\null\hspace{4cm}\textit{$temp \gets A[j]$}\\
+			\null\hspace{4cm}\textit{$A[j] \gets A[j - 1]$}\\
+			\null\hspace{4cm}\textit{$A[j - 1] \gets temp$}\\
+			\null\hspace{3cm}\textbf{else}\\
+			\null\hspace{4cm}\textbf{break}\\
+			\null\hspace{1cm}\textbf{return} \textit{A}\\
+		
+		\subsection{Analysis}
+			To implement insertion sort, like the previous method this method uses a nested for loop to 
+			iterate through the array of jobs. However, this time the inner loop iterates in reverse. 
+			The outer loop performs n iterations, and the inner loop performs n - 1, n - 2, ..., 2, 1 
+			iterations for every iteration of the outer loop, where n is the length of the jobs array. Therefore, 
+			the total number of iterations can be expressed as (n - 1) + (n - 2) + ... + 2 + 1, and by again 
+			using the rule of sum of an arithmetic sequence this equation can be further simplified to n(n - 1)/2. 
+			This is the same as the previous method so therefore, the worst case time complexity of this method 
+			is O($n ^ 2$).\\
+
+		\newpage
+
+		\subsection{Testing}
+			The unit test for this method is the same as the previous method. The only difference is that 
+			Priority() is used instead of FirstComeFirstServed().\\\\
+			First, the unit test creates an empty job array and then creates a job collection. Next, nine 
+			jobs are created with valid properties and added to the empty job array. The unit test then adds 
+			the jobs from the job array to the Jobs collection in reverse order, this is to ensure the jobs 
+			are not already sorted by their priority.\\\\
+			Next, a scheduler is created using the Jobs collection, and a new job array is created 
+			using the Priority method. The unit test then checks that every job in the 
+			new job array exists in their repective index in the job array. It also checks that every job is
+			distinct by checking an identicle job does not exist at any other index. If these conditions are 
+			met the unit test passes.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+	\newpage
+
+	\section{ShortestJobFirst Method}
+		\subsection{Algorithm Design}
+			This method is used to sort jobs for shortest job first scheduling. It achieves this by 
+			using the bubble sort algorithm to sort the jobs by their execution time.\\
+			
+			\textbf{ALGORITHM} \textit{ShortestJobFirst()}\\
+			\null\hspace{1cm}// Returns a new array of jobs sorted by their execution time\\
+			\null\hspace{1cm}\textit{$A \gets Jobs.ToArray()$}\\
+			\null\hspace{1cm}\textbf{for} \textit{$i \gets 0$} \textbf{in} \textit{$A.Length - 1$} \textbf{do}\\
+			\null\hspace{2cm}\textbf{for} \textit{$j \gets 0$} \textbf{in} \textit{$A.Length - i - 1$} \textbf{do}\\
+			\null\hspace{3cm}\textbf{if} \textit{$A[j].ExecutionTime > A[j + 1].ExecutionTime$}\\
+			\null\hspace{4cm}\textit{$temp \gets A[j]$}\\
+			\null\hspace{4cm}\textit{$A[j] \gets A[j + 1]$}\\
+			\null\hspace{4cm}\textit{$A[j + 1] \gets temp$}\\
+			\null\hspace{1cm}\textbf{return} \textit{A}\\
+
+		\subsection{Analysis}
+			To implement bubble sort, again this method uses a nested for loop to iterate through the array of 
+			jobs. The outer loop performs n - 1 iterations, and the inner loop performs 1, 2, ..., n - 3, n - 2 
+			iterations for every iteration of the outer loop, where n is the length of the jobs array. Therefore, 
+			the total number of iterations can be expressed as 1 + 2 + ... + (n - 3) + (n - 2), and by again 
+			using the rule of sum of an arithmetic sequence this equation can be further simplified to n(n - 1)/2. 
+			This is the same as the previous two methods so therefore, the worst case time complexity of this 
+			method is O($n ^ 2$).\\
+
+		\newpage
+
+		\subsection{Testing}
+			The unit test for this method is the same as the previous two methods. The only difference is that 
+			ShortestJobFirst() is used instead of\\ FirstComeFirstServed() or Priority().\\\\
+			First, the unit test creates an empty job array and then creates a job collection. Next, nine
+			jobs are created with valid properties and added to the empty job array. The unit test then adds
+			the jobs from the job array to the Jobs collection in reverse order, this is to ensure the jobs
+			are not already sorted by their execution time.\\\\
+			Next, a scheduler is created using the Jobs collection, and a new job array is created 
+			using the ShortestJobFirst method. The unit test then checks that every job in the
+			new job array exists in their respective index in the job array. It also checks that every job is
+			distinct by checking an identicle job does not exist at any other index. If these conditions 
+			are met the unit test passes.\\
+
+			\textbf{Test Result:} \textbf{\textcolor{darkgreen}{PASS}}\\
+
+\end{document}
