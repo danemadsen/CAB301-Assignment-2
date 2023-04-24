@@ -80,8 +80,24 @@ public class Movie : IMovie
     public string ToString()
     {
         string result = "{\"title\":\"" + title + "\",";
-        result += "\"genre\":\"" + genre + "\",";
-        result += "\"classification\":\"" + classification + "\",";
+        
+        switch(genre)
+        {
+            case MovieGenre.Action: result += "\"genre\":\"Action\","; break;
+            case MovieGenre.Comedy: result += "\"genre\":\"Comedy\","; break;
+            case MovieGenre.History: result += "\"genre\":\"History\","; break;
+            case MovieGenre.Drama: result += "\"genre\":\"Drama\","; break;
+            case MovieGenre.Western: result += "\"genre\":\"Western\","; break;
+        }
+
+        switch (classification)
+        {
+            case MovieClassification.G: result += "\"classification\":\"G\","; break;
+            case MovieClassification.PG: result += "\"classification\":\"PG\","; break;
+            case MovieClassification.M: result += "\"classification\":\"M\","; break;
+            case MovieClassification.M15Plus: result += "\"classification\":\"M15Plus\","; break;
+        }
+        
         result += "\"duration\":" + duration + ",";
         result += "\"availableCopies\":" + availablecopies + "}";
         return result;
