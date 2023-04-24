@@ -61,7 +61,17 @@ public class Movie : IMovie
     //                 return +1, if this movie's title is greater than another movie's title by dictionary order
     public int CompareTo(IMovie another)
     {
-        return title.CompareTo(another.Title);
+        int min = Math.Min(title.Length, another.Title.Length);
+
+        for (int i = 0; i < min; i++)
+        {
+            if (title[i] < another.Title[i]) return -1;
+            else if (title[i] > another.Title[i]) return 1;
+        }
+
+        if (title.Length < another.Title.Length) return -1;
+        else if (title.Length > another.Title.Length) return 1;
+        else return 0;
     }
 
     //Return a string containing the title, genre, classification, duration, and the number of copies of this movie currently in the library 
@@ -69,12 +79,12 @@ public class Movie : IMovie
     //Post-condition: A string containing the title, genre, classification, duration, and the number of available copies of this movie has been returned
     public string ToString()
     {
-        string result = "Title: " + title;
-        result += " Genre: " + genre;
-        result += " Classification: " + classification;
-        result += " Duration: " + duration;
-        result += " Available Copies: " + availablecopies;
-        return result;   
+        string result = "{\"title\":\"" + title + "\",";
+        result += "\"genre\":\"" + genre + "\",";
+        result += "\"classification\":\"" + classification + "\",";
+        result += "\"duration\":" + duration + ",";
+        result += "\"availableCopies\":" + availablecopies + "}";
+        return result;
     }
 }
 
