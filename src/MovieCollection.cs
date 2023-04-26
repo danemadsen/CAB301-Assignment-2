@@ -58,7 +58,7 @@ public class MovieCollection : IMovieCollection
 
 	public bool IsEmpty()
 	{
-		return root == null;
+		return root == null && count == 0;
 	}
 
 	public bool Insert(IMovie movie){
@@ -74,8 +74,6 @@ public class MovieCollection : IMovieCollection
 	    {
 	        switch(movie.CompareTo(current.Movie))
 	        {
-	            case 0: // movie already exists in the collection
-	                return false;
 	            case -1: // movie should be inserted to the left of current node
 	                if (current.LChild == null)
 	                {
@@ -85,6 +83,8 @@ public class MovieCollection : IMovieCollection
 	                }
 	                else current = current.LChild;
 	                break;
+				case 0: // movie already exists in the collection
+	                return false;
 	            case 1: // movie should be inserted to the right of current node
 	                if (current.RChild == null)
 	                {
@@ -107,40 +107,35 @@ public class MovieCollection : IMovieCollection
 	    // search for the node containing the movie to delete
 	    BTreeNode? current = root;
 	    BTreeNode? parent = null;
-	    while (current != null && !current.Movie.Equals(movie)) 
+	    while (current != null && movie.CompareTo(current.Movie) != 0) 
 	    {
 	        parent = current;
-	        if (String.Compare(movie.Title, current.Movie.Title) < 0)
-	        {
-	            current = current.LChild;
-	        } 
-	        else 
-	        {
-	            current = current.RChild;
-	        }
+			switch(movie.CompareTo(current.Movie))
+			{
+				case -1:
+					current = current.LChild;
+					break;
+				case 0:
+					break;
+				case 1:
+					current = current.RChild;
+					break;
+				default:
+					throw new Exception("Invalid comparison");
+			}
 	    }
 
-	    if (current == null) 
-	    {
-	        return false;
-	    }
+	    if (current == null) return false; // movie to delete not found
 
 	    // if current node has no child or one child, update parent link
 	    if (current.LChild == null || current.RChild == null) 
 	    {
 	        BTreeNode? child = current.LChild ?? current.RChild;
-	        if (parent == null) 
-	        {
-	            root = child;
-	        } 
-	        else if (parent.LChild == current) 
-	        {
-	            parent.LChild = child;
-	        } 
-	        else 
-	        {
-	            parent.RChild = child;
-	        }
+
+	        if (parent == null) root = child;
+	        else if (parent.LChild == current) parent.LChild = child;
+	        else parent.RChild = child;
+
 	        count--;
 	        return true;
 	    }
@@ -158,41 +153,35 @@ public class MovieCollection : IMovieCollection
 	    current.Movie = successor.Movie;
 
 	    // delete the successor node (which has no left child)
-	    if (parent.LChild == successor) 
-	    {
-	        parent.LChild = successor.RChild;
-	    } 
-	    else 
-	    {
-	        parent.RChild = successor.RChild;
-	    }
+	    if (parent.LChild == successor) parent.LChild = successor.RChild;
+	    else parent.RChild = successor.RChild;
+
 	    count--;
 	    return true;
 	}
 
-	// Needs Rewrite
 	public IMovie? Search(string movietitle)
 	{
 	    BTreeNode current = root;
 
-	    while (current != null)
+	    while (current != null && movietitle.CompareTo(current.Movie.Title) != 0)
 	    {
-	        int comparison = movietitle.CompareTo(current.Movie.Title);
-	        if (comparison == 0)
-	        {
-	            return current.Movie;
-	        }
-	        else if (comparison < 0)
-	        {
-	            current = current.LChild;
-	        }
-	        else
-	        {
-	            current = current.RChild;
-	        }
+	        switch(movietitle.CompareTo(current.Movie.Title))
+			{
+				case -1:
+					current = current.LChild;
+					break;
+				case 0:
+					break;
+				case 1:
+					current = current.RChild;
+					break;
+				default:
+					throw new Exception("Invalid comparison");
+			}
 	    }
 
-	    return null;
+	    return current?.Movie;
 	}
 
 
@@ -249,5 +238,6 @@ public class MovieCollection : IMovieCollection
 	public void Clear()
 	{
 		root = null;
+		count = 0;
     }
 }

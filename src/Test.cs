@@ -10,8 +10,16 @@ public class Test
         {
             Movie m2 = new Movie(('A' + i).ToString(), i % 5 + 1, i % 4 + 1, i, i);
             Assert.Equal(-1, m1.CompareTo(m2));
+            Assert.NotEqual(0, m1.CompareTo(m2));
+            Assert.NotEqual(1, m1.CompareTo(m2));
+
             Assert.Equal(1, m2.CompareTo(m1));
+            Assert.NotEqual(0, m2.CompareTo(m1));
+            Assert.NotEqual(-1, m2.CompareTo(m1));
+
             Assert.Equal(0, m1.CompareTo(m1));
+            Assert.NotEqual(1, m1.CompareTo(m1));
+            Assert.NotEqual(-1, m1.CompareTo(m1));
             m1 = m2;
         }
     }
@@ -21,5 +29,41 @@ public class Test
     {
         Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
         Assert.Equal("{\"title\":\"A\",\"genre\":\"Action\",\"classification\":\"G\",\"duration\":1,\"availableCopies\":1}", m1.ToString());
+    }
+
+    [Fact]
+    public void IsEmptyTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.True(mc.IsEmpty());
+    }
+
+    [Fact]
+    public void InsertTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        mc.Insert(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1));
+        Assert.False(mc.IsEmpty());
+    }
+
+    [Fact]
+    public void DeleteTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        mc.Insert(m1);
+        Assert.False(mc.IsEmpty());
+        mc.Delete(m1);
+        Assert.True(mc.IsEmpty());
+    }
+
+    [Fact]
+    public void SearchTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Assert.Null(mc.Search(m1.Title));
+        mc.Insert(m1);
+        Assert.Equal(m1, mc.Search(m1.Title));
     }
 }
