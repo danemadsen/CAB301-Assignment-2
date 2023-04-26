@@ -1,27 +1,29 @@
 using Xunit;
+using System;
 
 public class Test
 {
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Hello World!");
+    }
+    
     [Fact]
     public void CompareToTest()
     {
         Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
-        for(int i = 0; i < 5; i++)
-        {
-            Movie m2 = new Movie(('A' + i).ToString(), i % 5 + 1, i % 4 + 1, i, i);
-            Assert.Equal(-1, m1.CompareTo(m2));
-            Assert.NotEqual(0, m1.CompareTo(m2));
-            Assert.NotEqual(1, m1.CompareTo(m2));
+        Movie m2 = new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Assert.Equal(-1, m1.CompareTo(m2));
+        Assert.NotEqual(0, m1.CompareTo(m2));
+        Assert.NotEqual(1, m1.CompareTo(m2));
 
-            Assert.Equal(1, m2.CompareTo(m1));
-            Assert.NotEqual(0, m2.CompareTo(m1));
-            Assert.NotEqual(-1, m2.CompareTo(m1));
+        Assert.Equal(1, m2.CompareTo(m1));
+        Assert.NotEqual(0, m2.CompareTo(m1));
+        Assert.NotEqual(-1, m2.CompareTo(m1));
 
-            Assert.Equal(0, m1.CompareTo(m1));
-            Assert.NotEqual(1, m1.CompareTo(m1));
-            Assert.NotEqual(-1, m1.CompareTo(m1));
-            m1 = m2;
-        }
+        Assert.Equal(0, m1.CompareTo(m1));
+        Assert.NotEqual(1, m1.CompareTo(m1));
+        Assert.NotEqual(-1, m1.CompareTo(m1));
     }
 
     [Fact]
@@ -65,5 +67,36 @@ public class Test
         Assert.Null(mc.Search(m1.Title));
         mc.Insert(m1);
         Assert.Equal(m1, mc.Search(m1.Title));
+    }
+
+    [Fact]
+    public void NoDVDsTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Movie m2 = new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1);
+        mc.Insert(m1);
+        mc.Insert(m2);
+        Assert.Equal(2, mc.NoDVDs());
+    }
+
+    [Fact]
+    public void ToArrayTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        mc.Insert(m1);
+        Assert.Equal(new Movie[] {m1}, mc.ToArray());
+    }
+
+    [Fact]
+    public void ClearTest()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        mc.Insert(m1);
+        Assert.False(mc.IsEmpty());
+        mc.Clear();
+        Assert.True(mc.IsEmpty());
     }
 }

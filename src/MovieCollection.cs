@@ -44,9 +44,6 @@ public class MovieCollection : IMovieCollection
 {
 	private BTreeNode? root; // the root of the binary search tree in which movies are stored 
 	private int count; // the number of movies currently stored in this movie collection 
-
-
-
 	public int Number { get { return count; } }
 
 	// constructor - create an empty movie collection
@@ -185,14 +182,15 @@ public class MovieCollection : IMovieCollection
 	}
 
 
-	// Needs Rewrite
+	// Calculate the totall number of DVDs in this movie collection 
+    // Pre-condition: nil
+    // Post-condition: return the total number of DVDs in this movie collection. this moive collection remains unchanged, and new Number = old Number.
     public int NoDVDs()
 	{
 	    int totalDVDs = 0;
-	    Stack<BTreeNode> stack = new Stack<BTreeNode>();
-	    BTreeNode? curr = root;
+		Stack<BTreeNode> stack = new Stack<BTreeNode>();
 
-	    // Traverse the tree in inorder and sum up the number of DVDs of each movie
+		BTreeNode? curr = root;
 	    while (curr != null || stack.Count > 0)
 	    {
 	        while (curr != null)
@@ -202,7 +200,7 @@ public class MovieCollection : IMovieCollection
 	        }
 
 	        curr = stack.Pop();
-	        totalDVDs += curr.Movie.NumberDVDs;
+	        totalDVDs += curr.Movie.TotalCopies;
 	        curr = curr.RChild;
 	    }
 
