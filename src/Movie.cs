@@ -77,7 +77,7 @@ public class Movie : IMovie
     //Return a string containing the title, genre, classification, duration, and the number of copies of this movie currently in the library 
     //Pre-condition: nil
     //Post-condition: A string containing the title, genre, classification, duration, and the number of available copies of this movie has been returned
-    public string ToString()
+    public override string ToString()
     {
         string result = "{\"title\":\"" + title + "\",";
         

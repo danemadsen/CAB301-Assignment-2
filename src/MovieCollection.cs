@@ -66,10 +66,10 @@ public class MovieCollection : IMovieCollection
 	        return true;
 	    }
 
-	    BTreeNode current = root;
+	    BTreeNode? current = root;
 	    while (true)
 	    {
-	        switch(movie.CompareTo(current.Movie))
+	        switch(movie?.CompareTo(current.Movie))
 	        {
 	            case -1: // movie should be inserted to the left of current node
 	                if (current.LChild == null)
