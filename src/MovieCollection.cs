@@ -97,34 +97,21 @@ public class MovieCollection : IMovieCollection
 	    }
 	}
 
-	// Needs Rewrite
-	public bool Delete(IMovie movie) {
+	public bool Delete(IMovie movie)
+	{
 	    if (this.IsEmpty()) return false;
-	
-	    // search for the node containing the movie to delete
+
 	    BTreeNode? current = root;
 	    BTreeNode? parent = null;
+
 	    while (current != null && movie.CompareTo(current.Movie) != 0) 
 	    {
 	        parent = current;
-			switch(movie.CompareTo(current.Movie))
-			{
-				case -1:
-					current = current.LChild;
-					break;
-				case 0:
-					break;
-				case 1:
-					current = current.RChild;
-					break;
-				default:
-					throw new Exception("Invalid comparison");
-			}
+	        current = (movie.CompareTo(current.Movie) == -1) ? current.LChild : current.RChild;
 	    }
 
-	    if (current == null) return false; // movie to delete not found
+	    if (current == null) return false;
 
-	    // if current node has no child or one child, update parent link
 	    if (current.LChild == null || current.RChild == null) 
 	    {
 	        BTreeNode? child = current.LChild ?? current.RChild;
@@ -136,25 +123,25 @@ public class MovieCollection : IMovieCollection
 	        count--;
 	        return true;
 	    }
+		else
+		{
+			BTreeNode? successor = current.RChild;
+	    	parent = current;
 
-	    // if current node has two children, find the inorder successor
-	    BTreeNode? successor = current.RChild;
-	    parent = current;
-	    while (successor.LChild != null) 
-	    {
-	        parent = successor;
-	        successor = successor.LChild;
-	    }
+	    	while (successor.LChild != null) 
+	    	{
+	    	    parent = successor;
+	    	    successor = successor.LChild;
+	    	}
+		
+	    	current.Movie = successor.Movie;
 
-	    // replace the movie in the current node with that in the successor node
-	    current.Movie = successor.Movie;
+	    	if (parent.LChild == successor) parent.LChild = successor.RChild;
+	    	else parent.RChild = successor.RChild;
 
-	    // delete the successor node (which has no left child)
-	    if (parent.LChild == successor) parent.LChild = successor.RChild;
-	    else parent.RChild = successor.RChild;
-
-	    count--;
-	    return true;
+	    	count--;
+	    	return true;
+		}
 	}
 
 	public IMovie? Search(string movietitle)
