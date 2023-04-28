@@ -59,42 +59,45 @@ public class MovieCollection : IMovieCollection
 	}
 
 	public bool Insert(IMovie movie){
-	    if (this.IsEmpty()) // if the tree is empty
+	    if (root == null) // if the tree is empty
 	    {
 	        root = new BTreeNode(movie);
 	        count++;
 	        return true;
 	    }
-
-	    BTreeNode? current = root;
-	    while (true)
-	    {
-	        switch(movie?.CompareTo(current.Movie))
-	        {
-	            case -1: // movie should be inserted to the left of current node
-	                if (current.LChild == null)
-	                {
-	                    current.LChild = new BTreeNode(movie);
-	                    count++;
-	                    return true;
-	                }
-	                else current = current.LChild;
-	                break;
-				case 0: // movie already exists in the collection
-	                return false;
-	            case 1: // movie should be inserted to the right of current node
-	                if (current.RChild == null)
-	                {
-	                    current.RChild = new BTreeNode(movie);
-	                    count++;
-	                    return true;
-	                }
-	                else current = current.RChild;
-	                break;
-				default:
-					throw new Exception("Invalid comparison");
-	        }
-	    }
+		else
+		{
+			BTreeNode current = root;
+			while (true)
+	    	{
+	    	    switch(movie.CompareTo(current.Movie))
+	    	    {
+	    	        case -1: // movie should be inserted to the left of current node
+	    	            if (current.LChild == null)
+	    	            {
+	    	                current.LChild = new BTreeNode(movie);
+	    	                count++;
+	    	                return true;
+	    	            }
+	    	            else current = current.LChild;
+	    	            break;
+					case 0: // movie already exists in the collection
+	    	            return false;
+	    	        case 1: // movie should be inserted to the right of current node
+	    	            if (current.RChild == null)
+	    	            {
+	    	                current.RChild = new BTreeNode(movie);
+	    	                count++;
+	    	                return true;
+	    	            }
+	    	            else current = current.RChild;
+	    	            break;
+					default:
+						throw new Exception("Invalid comparison");
+	    	    }
+	    	}
+		}
+	    
 	}
 
 	public bool Delete(IMovie movie)
@@ -146,7 +149,7 @@ public class MovieCollection : IMovieCollection
 
 	public IMovie? Search(string movietitle)
 	{
-	    BTreeNode current = root;
+	    BTreeNode? current = root;
 
 	    while (current != null && movietitle.CompareTo(current.Movie.Title) != 0)
 	    {
@@ -168,10 +171,6 @@ public class MovieCollection : IMovieCollection
 	    return current?.Movie;
 	}
 
-
-	// Calculate the totall number of DVDs in this movie collection 
-    // Pre-condition: nil
-    // Post-condition: return the total number of DVDs in this movie collection. this moive collection remains unchanged, and new Number = old Number.
     public int NoDVDs()
 	{
 	    int totalDVDs = 0;
@@ -194,7 +193,6 @@ public class MovieCollection : IMovieCollection
 	    return totalDVDs;
 	}
 
-	// Needs Rewrite
     public IMovie[] ToArray()
 	{
 		IMovie[] movies = new IMovie[count];
