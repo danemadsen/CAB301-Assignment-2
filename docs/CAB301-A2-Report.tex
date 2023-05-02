@@ -25,8 +25,37 @@
 	\tableofcontents
 	\newpage
 	
-	\section{CompareTo Method}
+	\section{NoDVDs Method}
 		\subsection{Algorithm Design}
+			This method calculates the total number of DVDs in a MovieCollection 
+			through a in-order node tree traversal using a stack of movies. First, 
+			it initializes the DVD count to be 0 and starts traversing from the root. 
+			The outer while loop continues until the current movie is null and the stack 
+			count is 0. The inner while loop traverses the left subtree, pushing left child 
+			movies onto the stack. After traversing the left subtree, the method pops 
+			the top movie, adds its total copies to the running total, and moves to 
+			its right child of that movie. This process visits each node, cumulatively 
+			adding the total copies to the count. Once the traversal finishes, it returns 
+			the total DVDs.\\
+		
+			\textbf{ALGORITHM} \textit{NoDVDs()}\\
+			\null\hspace{1cm}// Calculates the total number of DVDs\\
+			\null\hspace{1cm}// Returns the total number of DVDs in the MovieCollection\\
+			\null\hspace{1cm}\textit{totalDVDs} $\leftarrow 0$\\
+			\null\hspace{1cm}\textit{stack} $\leftarrow$ an empty BTreeNodes stack\\
+			\null\hspace{1cm}\textit{curr} $\leftarrow$ root node of the MovieCollection\\
+			\null\hspace{1cm}\textbf{while} \textit{curr} $\neq$ null \textbf{or} 
+			\textit{stack} \textbf{is not} empty\\
+			\null\hspace{2cm}\textbf{while} \textit{curr} $\neq$ null\\
+			\null\hspace{3cm}\textit{stack.push(curr)}\\
+			\null\hspace{3cm}\textit{curr} $\leftarrow$ \textit{curr.LChild}\\
+			\null\hspace{2cm}\textit{curr} $\leftarrow$ \textit{stack.pop()}\\
+			\null\hspace{2cm}\textit{totalDVDs} $\leftarrow$ \textit{totalDVDs} + 
+			\textit{curr.Movie.TotalCopies}\\
+			\null\hspace{2cm}\textit{curr} $\leftarrow$ \textit{curr.RChild}\\
+			\null\hspace{1cm}\textbf{return} \textit{totalDVDs}
+
+		\subsection{Algorithm Analysis}
 			
 
 \end{document}
