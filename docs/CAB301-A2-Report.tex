@@ -28,15 +28,16 @@
 	\section{NoDVDs Method}
 		\subsection{Algorithm Design}
 			This method calculates the total number of DVDs in a MovieCollection 
-			through a in-order node tree traversal using a stack of movies. First, 
-			it initializes the DVD count to be 0 and starts traversing from the root. 
-			The outer while loop continues until the current movie is null and the stack 
-			count is 0. The inner while loop traverses the left subtree, pushing left child 
-			movies onto the stack. After traversing the left subtree, the method pops 
-			the top movie, adds its total copies to the running total, and moves to 
-			its right child of that movie. This process visits each node, cumulatively 
-			adding the total copies to the count. Once the traversal finishes, it returns 
-			the total DVDs.\\
+			through a in-order node tree traversal using a stack of BTreeNodes. Firstly, 
+			it initializes the DVD count to be 0, creates an empty stack of BTreeNodes 
+			and starts traversing from the root. Next, an outer while loop starts and 
+			continues until the current BTreeNode is null and the stack count is equal 
+			to 0. Inside the outer while loop, the inner while loop traverses the left 
+			subtree, pushing left child BTreeNodes onto the stack. After traversing the 
+			left subtree, the method pops the first movie from the top of the stack, adds 
+			its total copies to the running total, and moves to the right child of the popped 
+			movie. This process visits each node, cumulatively adding the total copies to 
+			the count. Once the traversal finishes, it returns the total DVDs.\\
 		
 			\textbf{ALGORITHM} \textit{NoDVDs()}\\
 			\null\hspace{1cm}// Calculates the total number of DVDs\\
