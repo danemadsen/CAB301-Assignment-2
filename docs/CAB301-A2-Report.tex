@@ -9,6 +9,7 @@
 \pgfplotsset{compat=1.17}
 
 \definecolor{darkgreen}{RGB}{0, 150, 0}
+\pgfplotstableread[col sep=comma]{../analysis_results.csv}\datatable
 
 \begin{document}
 	\begin{titlepage}
@@ -28,7 +29,7 @@
 	\tableofcontents
 	\newpage
 	
-	\section{NoDVDs Method}
+	\section{NoDVDs Method Design and Analysis}
 		\subsection{Algorithm Design}
 			This method calculates the total number of DVDs in a MovieCollection 
 			through a in-order node tree traversal using a stack of BTreeNodes. Firstly, 
@@ -64,9 +65,10 @@
 		\subsection{Algorithm Analysis}
 			To perform an emperical analysis of the NoDVDs method, I created 20 
 			MovieCollections of exponentially increasing sizes (from 1 to 524388 
-			movies). Then, for each of these MovieCollections, I ran the NoDVDs 
-			method 10 times and averaged the time taken to run the method. The 
-			results of this analysis are shown in Figure 1.\\
+			movies which is roughly close to the amount of movies on IMDb). Then, 
+			for each of these MovieCollections, I ran the NoDVDs method 10 times 
+			and averaged the time taken to run the method. The results of this 
+			analysis are shown in Figure 1.\\
 
 			\begin{figure}[h]
 				\centering
@@ -84,19 +86,127 @@
 						width=\textwidth,
 						height=8cm
 					]
-					% Read the data from the CSV file
-					\pgfplotstableread[col sep=comma]{../analysis_results.csv}\datatable
-					% Plot the data from the datatable
 					\addplot[mark=*,blue] table[x=MovieCollections,y=AveragedExecutionTime] from \datatable;
 					\end{axis}
 				\end{tikzpicture}
 				\caption{Average Execution Time of NoDVDs()}
 			\end{figure}
 			
-			As this figure shows, though some of the first few MovieCollections have 
-			timings that are outliers, after the third MovieCollection (with 8 values), the average 
-			execution times of the NoDVDs method increase linearly.
+			As Figure 1 shows, though some of the first few MovieCollections have 
+			timings that are outliers, after the third MovieCollection (which has 8 values), the average 
+			execution times of the NoDVDs method increase linearly. As such the closest efficiency 
+			classification for this method would be $O(n)$, where $n$ is the number of movies in the
+			given MovieCollection. This hypothesis is can be supported by ploting the $T/n$ vs. $n$ as 
+			shown in Figure 2.\\
+
+			\newpage
+
+			\begin{figure}[h]
+				\centering
+				\begin{tikzpicture}
+				  \begin{axis}[
+					title={Average Execution Time of NoDVDs() / n},
+					xlabel={MovieCollection ID (n)},
+					ylabel={Execution Time (T) / n [ms]},
+					xmode=log,
+					ymode=log,
+					log ticks with fixed point,
+					grid=major,
+					width=\textwidth,
+					height=8cm
+				  ]
+				  \addplot[mark=*,blue] table[x=MovieCollections,y=AveragedTN] from \datatable;
+				  \end{axis}
+				\end{tikzpicture}
+				\caption{Plot of MovieCollection ID (n) vs. Execution Time (T) / n}
+				\label{fig:execution_time_over_n_plot}
+			\end{figure}
 			
+			Similar to Figure 1, Figure 2 shows that the first few MovieCollections have 
+			$T/n$ values that are outliers, but again after the third MovieCollection, the $T/n$ 
+			values become quite stable which supports the hypothesis that the algorithm used 
+			for the NoDVDs method has an efficiency classification of $O(n)$.\\
+		
+		\newpage
+	
+	\section{Testing}
+		\subsection{CompareTo Method Testing}
+			To test the CompareTo method I created three XUnit tests. The first test 
+			ensures that the method returns -1 when the movie CompareTo is being called 
+			on is alphabetically less than the movie being provided to CompareTo as a 
+			parameter. It achives this by creating two movies, one with the letter A as 
+			a title and the other with the letter B as a title. Then the unit test calls 
+			CompareTo on the first movie (with the letter A) and passes the second movie 
+			(with the letter B) as a parameter and asserts that the returned value is equal 
+			to -1.\\
+			\\
+			The second test ensures that the CompareTo method returns 0 when the movie 
+			CompareTo is being called on is equal to the movie being provided to CompareTo 
+			as a parameter. It achives this by creating two movies, both with the letter A 
+			as a title. Then the unit test calls CompareTo on the first movie and passes the 
+			second movie as a parameter, then it asserts that the returned value is equal to 
+			0.\\
+			\\
+			The third and final test ensures that the CompareTo method returns 1 when the 
+			movie CompareTo is being called on is alphabetically greater than the movie 
+			being provided to CompareTo as a parameter. It achives this by creating two 
+			movies, one with the letter B as a title and the other with the letter A as a 
+			title (the same as the first test only in reverse). Then the unit test calls 
+			CompareTo on the first movie (with the letter B) and passes the second movie 
+			(with the letter A) as a parameter and asserts that the returned value is equal 
+			to 1.\\
+			
+		\newpage
+
+		\subsection{ToString Method Testing}
+			To test the ToString method I created three XUnit tests. The first test 
+			ensures that the method returns the correct string when the movie has 
+			only one copy. It achives this by creating a movie with the title "A", 
+			the genre Action, the classification G, the duration 1 and the totalcopies 
+			also 1. Then the unit test calls ToString on the movie and asserts that 
+			the returned value is equal to the expected string. This test can also be 
+			considered the minimum boundary test.\\
+			\\
+			The second test ensures that the ToString method returns the correct 
+			string when the movie has more than one copy. It achives this by creating 
+			a movie with the title "Sophies Choice", the genre Drama, the classification 
+			M, the duration 151 and the totalcopies 12137123. Then the unit test then 
+			calls ToString on the movie and asserts that the returned value is equal 
+			to the expected string.\\
+			\\
+			The third and final test ensures that the ToString method returns the 
+			correct string when the movie has a very large number of copies. It 
+			achives this by creating a movie with the title "ZZZZZZZZZ", the genre 
+			Western, the classification M15Plus, and the duration and totalcopies 
+			both 2147483647. Then the unit test calls ToString on the movie and 
+			asserts that the returned value is equal to the expected string. This 
+			test can also be considered the maximum boundary test.\\
+
+		\newpage
+
+		\subsection{IsEmpty Method Testing}
+			
+
+		\subsection{NoDVDs Method Testing}
+			To test the NoDVDs method I created three XUnit tests. The first test 
+			ensures that the method returns 0 when the MovieCollection is empty. 
+			It achives this by creating an empty MovieCollection and asserting that 
+			when the NoDVDs method is called on the MovieCollection, it returns 0. 
+			This can also be considered the minimum boundary test.\\ 
+			\\
+			The second test ensures that NoDVDs returns the correct number of DVDs under 
+			normal circumstances. To achive this the unit test creates a MovieCollection 
+			and then populates it with two movies each with 1000 totalDVDs. Then, the 
+			unit test asserts that the the returned value of NoDVDs is equal to 2000.\\
+			\\
+			The third and final test ensures that the NoDVDs method returns the correct 
+			number of DVDs when the amount of DVDs is very large. To achieve this, the 
+			unit test creates a MovieCollection and then populates it with two movies 
+			each with half the maximum integer value (2147483647) minus one (1073741823, 
+			because the maxint is odd) as their totalDVDs. Then, the unit test asserts 
+			that the returned value of NoDVDs is equal to the maximum integer value 
+			minus one.\\ 
+
 
 			
 

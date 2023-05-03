@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 
-public class Test
+public class NoDVDsAnalysis
 {
     static void Main()
     {
@@ -25,7 +25,7 @@ public class Test
         using (StreamWriter writer = new StreamWriter("../analysis_results.csv"))
         {
             // Write the header row of the CSV file
-            writer.WriteLine("MovieCollections,AveragedExecutionTime");
+            writer.WriteLine("MovieCollections,AveragedExecutionTime, AveragedTN");
 
             for (int i = 0; i < testSizes.Length; i++)
             {
@@ -43,7 +43,7 @@ public class Test
                 Console.WriteLine($"MovieCollection{testSizes[i]}.NoDVDs() took {averagedExecutionTime[i].ToString("F4")}ms on average");
 
                 // Write the results to the CSV file
-                writer.WriteLine($"{testSizes[i]},{averagedExecutionTime[i].ToString("F4")}");
+                writer.WriteLine($"{testSizes[i]},{averagedExecutionTime[i].ToString("F4")}, {(averagedExecutionTime[i] / testSizes[i]).ToString("F8")}");
             }
         }
     }
@@ -59,7 +59,10 @@ public class Test
         }
         return collection;
     }
+}
 
+public class MovieTests
+{
     [Fact]
     public void CompareToFunctionTest_MovieLeft()
     {
@@ -110,7 +113,10 @@ public class Test
         Movie m1 = new Movie("ZZZZZZZZZ", MovieGenre.Western, MovieClassification.M15Plus, int.MaxValue, int.MaxValue);
         Assert.Equal("{\"title\":\"ZZZZZZZZZ\",\"genre\":\"Western\",\"classification\":\"M15Plus\",\"duration\":2147483647,\"availableCopies\":2147483647,\"totalCopies\":2147483647}", m1.ToString());
     }
+}
 
+public class MovieCollectionTests
+{
     [Fact]
     public void IsEmptyTest_Empty()
     {
@@ -224,8 +230,8 @@ public class Test
     public void NoDVDsBoundaryTest_Maximum()
     {
         MovieCollection mc = new MovieCollection();
-        Assert.True(mc.Insert(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, int.MaxValue / 2)));
-        Assert.True(mc.Insert(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, int.MaxValue / 2)));
+        Assert.True(mc.Insert(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, (int.MaxValue - 1) / 2)));
+        Assert.True(mc.Insert(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, (int.MaxValue - 1) / 2)));
         Assert.Equal(int.MaxValue - 1, mc.NoDVDs()); // -1 because int.MaxValue is odd
     }
 
