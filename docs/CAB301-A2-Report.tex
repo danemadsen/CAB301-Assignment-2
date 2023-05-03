@@ -4,6 +4,9 @@
 \usepackage[none]{hyphenat}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.17}
 
 \definecolor{darkgreen}{RGB}{0, 150, 0}
 
@@ -56,7 +59,45 @@
 			\null\hspace{2cm}\textit{curr} $\leftarrow$ \textit{curr.RChild}\\
 			\null\hspace{1cm}\textbf{return} \textit{totalDVDs}
 
+		\newpage
+
 		\subsection{Algorithm Analysis}
+			To perform an emperical analysis of the NoDVDs method, I created 20 
+			MovieCollections of exponentially increasing sizes (from 1 to 524388 
+			movies). Then, for each of these MovieCollections, I ran the NoDVDs 
+			method 10 times and averaged the time taken to run the method. The 
+			results of this analysis are shown in Figure 1.\\
+
+			\begin{figure}[h]
+				\centering
+				\begin{tikzpicture}
+					\begin{axis}[
+						title={Average Execution Time of NoDVDs()},
+						xlabel={Collection Size},
+						ylabel={Execution Time (ms)},
+						xmode=log,
+						ymode=log,
+						log ticks with fixed point,
+						grid=major,
+						xmin=1, xmax=524288,
+						ymin=0.0001, ymax=20,
+						width=\textwidth,
+						height=8cm
+					]
+					% Read the data from the CSV file
+					\pgfplotstableread[col sep=comma]{../analysis_results.csv}\datatable
+					% Plot the data from the datatable
+					\addplot[mark=*,blue] table[x=MovieCollections,y=AveragedExecutionTime] from \datatable;
+					\end{axis}
+				\end{tikzpicture}
+				\caption{Average Execution Time of NoDVDs()}
+			\end{figure}
+			
+			As this figure shows, though some of the first few MovieCollections have 
+			timings that are outliers, after the third MovieCollection (with 8 values), the average 
+			execution times of the NoDVDs method increase linearly.
+			
+
 			
 
 \end{document}

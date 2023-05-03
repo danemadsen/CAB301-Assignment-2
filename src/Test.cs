@@ -2,49 +2,62 @@ using Xunit;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
 
 public class Test
 {
     static void Main()
     {
-        int[] testSizes = { 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
+        int[] testSizes = new int[20];
+        int size = 1;
+
+        for (int i = 0; i < testSizes.Length; i++)
+        {
+            testSizes[i] = size;
+            size *= 2;
+        }
+
         IMovieCollection[] collections = new IMovieCollection[testSizes.Length];
         double[] averagedExecutionTime = new double[testSizes.Length];
         int analysisRepetitions = 10;
 
-        for (int i = 0; i < testSizes.Length; i++)
+        // Create a StreamWriter to write the results to a CSV file
+        using (StreamWriter writer = new StreamWriter("../analysis_results.csv"))
         {
-            double[] executionTimes = new double[analysisRepetitions];
-            (collections[i], _) = createFilledCollection(testSizes[i]);
-            
-            for (int j = 0; j < analysisRepetitions; j++)
+            // Write the header row of the CSV file
+            writer.WriteLine("MovieCollections,AveragedExecutionTime");
+
+            for (int i = 0; i < testSizes.Length; i++)
             {
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                collections[i].NoDVDs();
-                stopwatch.Stop();
-                executionTimes[j] = stopwatch.Elapsed.TotalMilliseconds;
-                Console.WriteLine($"MovieCollection{testSizes[i]}.NoDVDs() took {executionTimes[j]}ms");
+                double[] executionTimes = new double[analysisRepetitions];
+                collections[i] = createFilledCollection(testSizes[i]);
+
+                for (int j = 0; j < analysisRepetitions; j++)
+                {
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    collections[i].NoDVDs();
+                    stopwatch.Stop();
+                    executionTimes[j] = stopwatch.Elapsed.TotalMilliseconds;
+                }
+                averagedExecutionTime[i] = executionTimes.Average();
+                Console.WriteLine($"MovieCollection{testSizes[i]}.NoDVDs() took {averagedExecutionTime[i].ToString("F4")}ms on average");
+
+                // Write the results to the CSV file
+                writer.WriteLine($"{testSizes[i]},{averagedExecutionTime[i].ToString("F4")}");
             }
-            averagedExecutionTime[i] = executionTimes.Average();
-            Console.WriteLine($"MovieCollection{testSizes[i]}.NoDVDs() took {averagedExecutionTime[i]}ms on average");
         }
     }
+
     
-    static (IMovieCollection, int) createFilledCollection(int amount)
+    static IMovieCollection createFilledCollection(int amount)
     {
         IMovieCollection collection = new MovieCollection();
-        Random random = new Random();
-        int runningTotalDVDs = 0;
-
         for (int i = 0; i < amount; i++)
         {
             string hexString = i.ToString("X");
-            int availableDVDs = random.Next(0, 1000000);
-            int totalDVDs = random.Next(availableDVDs, 1000000);
-            runningTotalDVDs += totalDVDs;
-            collection.Insert(new Movie(hexString, MovieGenre.Action, MovieClassification.G, availableDVDs, totalDVDs));
+            collection.Insert(new Movie(hexString, MovieGenre.Action, MovieClassification.G, 1, 10));
         }
-        return (collection, runningTotalDVDs);
+        return collection;
     }
 
     [Fact]
@@ -98,7 +111,6 @@ public class Test
         Assert.Equal("{\"title\":\"ZZZZZZZZZ\",\"genre\":\"Western\",\"classification\":\"M15Plus\",\"duration\":2147483647,\"availableCopies\":2147483647,\"totalCopies\":2147483647}", m1.ToString());
     }
 
-
     [Fact]
     public void IsEmptyTest_Empty()
     {
@@ -123,7 +135,7 @@ public class Test
     }
 
     [Fact]
-    public void InsertBoundaryTest_Normal()
+    public void InsertTest_Normal()
     {
         MovieCollection mc = new MovieCollection();
         Assert.True(mc.Insert(new Movie("Sophies Choice", MovieGenre.Drama, MovieClassification.M, 151, 12137123)));
@@ -149,56 +161,107 @@ public class Test
     }
 
     [Fact]
-    public void DeleteTest()
+    public void DeleteTest_Success()
     {
         MovieCollection mc = new MovieCollection();
         Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
-        mc.Insert(m1);
+        Assert.True(mc.Insert(m1));
         Assert.False(mc.IsEmpty());
-        mc.Delete(m1);
+        Assert.True(mc.Delete(m1));
         Assert.True(mc.IsEmpty());
     }
 
     [Fact]
-    public void SearchTest()
+    public void DeleteTest_EmptyCollectionFailure()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.False(mc.Delete(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1)));
+    }
+
+    [Fact]
+    public void DeleteTest_NonExistentMovieFailure()
     {
         MovieCollection mc = new MovieCollection();
         Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
-        Assert.Null(mc.Search(m1.Title));
-        mc.Insert(m1);
+        Assert.True(mc.Insert(m1));
+        Assert.False(mc.IsEmpty());
+        Assert.False(mc.Delete(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1)));
+    }
+
+    [Fact]
+    public void SearchTest_Exists()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Assert.True(mc.Insert(m1));
         Assert.Equal(m1, mc.Search(m1.Title));
     }
 
     [Fact]
-    public void NoDVDsTest()
+    public void SearchTest_DoesNotExist()
     {
-        int[] testSizes = { 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192 };
-        int[] trueTotals = new int[testSizes.Length];
-        IMovieCollection[] collections = new IMovieCollection[testSizes.Length];
-
-        for (int i = 0; i < testSizes.Length; i++)
-        {
-            (collections[i], trueTotals[i]) = createFilledCollection(testSizes[i]);
-            
-            Assert.Equal(trueTotals[i], collections[i].NoDVDs());
-        }
+        MovieCollection mc = new MovieCollection();
+        Assert.Null(mc.Search("A"));
     }
 
     [Fact]
-    public void ToArrayTest()
+    public void NoDVDsBoundaryTest_Minimum()
     {
         MovieCollection mc = new MovieCollection();
-        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
-        mc.Insert(m1);
-        Assert.Equal(new Movie[] {m1}, mc.ToArray());
+        Assert.Equal(0, mc.NoDVDs());
     }
 
     [Fact]
-    public void ClearTest()
+    public void NoDVDsTest_Normal()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.True(mc.Insert(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1000)));
+        Assert.True(mc.Insert(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1000)));
+        Assert.Equal(2000, mc.NoDVDs());
+    }
+
+    [Fact]
+    public void NoDVDsBoundaryTest_Maximum()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.True(mc.Insert(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, int.MaxValue / 2)));
+        Assert.True(mc.Insert(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, int.MaxValue / 2)));
+        Assert.Equal(int.MaxValue - 1, mc.NoDVDs()); // -1 because int.MaxValue is odd
+    }
+
+    [Fact]
+    public void ToArrayTest_Empty()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.Equal(new Movie[] {}, mc.ToArray());
+    }
+
+    [Fact]
+    public void ToArrayTest_Normal()
     {
         MovieCollection mc = new MovieCollection();
         Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
-        mc.Insert(m1);
+        Movie m2 = new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Assert.True(mc.Insert(m1));
+        Assert.True(mc.Insert(m2));
+        Assert.Equal(new Movie[] {m1, m2}, mc.ToArray());
+    }
+
+    [Fact]
+    public void ClearTest_Empty()
+    {
+        MovieCollection mc = new MovieCollection();
+        Assert.True(mc.IsEmpty());
+        mc.Clear();
+        Assert.True(mc.IsEmpty());
+    }
+    
+    [Fact]
+    public void ClearTest_Normal()
+    {
+        MovieCollection mc = new MovieCollection();
+        Movie m1 = new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1);
+        Assert.True(mc.Insert(m1));
         Assert.False(mc.IsEmpty());
         mc.Clear();
         Assert.True(mc.IsEmpty());
