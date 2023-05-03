@@ -134,7 +134,7 @@
 			To test the CompareTo method I created three XUnit tests. The first test 
 			ensures that the method returns -1 when the movie CompareTo is being called 
 			on is alphabetically less than the movie being provided to CompareTo as a 
-			parameter. It achives this by creating two movies, one with the letter A as 
+			parameter. It achieves this by creating two movies, one with the letter A as 
 			a title and the other with the letter B as a title. Then the unit test calls 
 			CompareTo on the first movie (with the letter A) and passes the second movie 
 			(with the letter B) as a parameter and asserts that the returned value is equal 
@@ -142,14 +142,14 @@
 			\\
 			The second test ensures that the CompareTo method returns 0 when the movie 
 			CompareTo is being called on is equal to the movie being provided to CompareTo 
-			as a parameter. It achives this by creating two movies, both with the letter A 
+			as a parameter. It achieves this by creating two movies, both with the letter A 
 			as a title. Then the unit test calls CompareTo on the first movie and passes the 
 			second movie as a parameter, then it asserts that the returned value is equal to 
 			0.\\
 			\\
 			The third and final test ensures that the CompareTo method returns 1 when the 
 			movie CompareTo is being called on is alphabetically greater than the movie 
-			being provided to CompareTo as a parameter. It achives this by creating two 
+			being provided to CompareTo as a parameter. It achieves this by creating two 
 			movies, one with the letter B as a title and the other with the letter A as a 
 			title (the same as the first test only in reverse). Then the unit test calls 
 			CompareTo on the first movie (with the letter B) and passes the second movie 
@@ -161,41 +161,104 @@
 		\subsection{ToString Method Testing}
 			To test the ToString method I created three XUnit tests. The first test 
 			ensures that the method returns the correct string when the movie has 
-			only one copy. It achives this by creating a movie with the title "A", 
-			the genre Action, the classification G, the duration 1 and the totalcopies 
-			also 1. Then the unit test calls ToString on the movie and asserts that 
-			the returned value is equal to the expected string. This test can also be 
-			considered the minimum boundary test.\\
+			only one copy. It achieves this by creating a movie with the parameters: 
+			"A", Action, G, 1, 1. Then the unit test calls ToString on the movie and 
+			asserts that the returned value is equal to the expected string. This test 
+			can also be considered the minimum boundary test.\\
 			\\
 			The second test ensures that the ToString method returns the correct 
-			string when the movie has more than one copy. It achives this by creating 
-			a movie with the title "Sophies Choice", the genre Drama, the classification 
-			M, the duration 151 and the totalcopies 12137123. Then the unit test then 
-			calls ToString on the movie and asserts that the returned value is equal 
-			to the expected string.\\
+			string when the movie has more than one copy. It achieves this by creating 
+			a movie with the parameters: "Sophies Choice", Drama, M, 151, 12137123. 
+			Then the unit test calls ToString on the movie and asserts that the returned 
+			value is equal to the expected string.\\
 			\\
 			The third and final test ensures that the ToString method returns the 
 			correct string when the movie has a very large number of copies. It 
-			achives this by creating a movie with the title "ZZZZZZZZZ", the genre 
-			Western, the classification M15Plus, and the duration and totalcopies 
-			both 2147483647. Then the unit test calls ToString on the movie and 
-			asserts that the returned value is equal to the expected string. This 
-			test can also be considered the maximum boundary test.\\
-
-		\newpage
+			achieves this by creating a movie with the parameters: "ZZZZZZZZZ", 
+			Western, M15Plus, and the duration and totalcopies both 2147483647. 
+			Then the unit test calls ToString on the movie and asserts that the 
+			returned value is equal to the expected string. This test can also 
+			be considered the maximum boundary test.\\
 
 		\subsection{IsEmpty Method Testing}
-			
+			To test the IsEmpty method I created two XUnit tests. The first test 
+			ensures that the method returns true when the MovieCollection is empty. 
+			It achieves this by creating an empty MovieCollection and asserting that 
+			when the IsEmpty method is called on the MovieCollection, it returns 
+			true.\\
+			\\
+			The second test ensures that the IsEmpty method returns false when the 
+			MovieCollection is not empty. It achieves this by again creating a 
+			MovieCollection, but this time populating it with a movie. Then	the 
+			unit test asserts that when the IsEmpty method is called on the 
+			MovieCollection, it returns false.\\
+		
+		\newpage
+
+ 		\subsection{Insert Method Testing}
+			To test the Insert method I created four XUnit tests. The first test 
+			ensures that the method returns true when the movie being inserted has 
+			minimum boundary values. It achieves this by creating a MovieCollection 
+			and a movie with the parameters: "A", Action, G, 1, 1. Then the unit 
+			test calls Insert on the MovieCollection and passes the movie as a 
+			parameter and asserts that the returned value is equal to true.\\
+			\\
+			The second test ensures that the method returns true when the movie 
+			being inserted does not already exist in the MovieCollection. It 
+			achieves this by creating a MovieCollection and a movie with the 
+			parameters: "Sophies Choice", Drama, M, 151, 12137123. Then the unit 
+			test calls Insert on the MovieCollection and passes the movie as a 
+			parameter and asserts that the returned value is equal to true.\\
+			\\
+			The third test ensures that the Insert method fuctions correctly when 
+			the movie being inserted has maximum boundary values. It achieves this 
+			by creating a MovieCollection and a movie with the parameters: "ZZZZZZZZZ", 
+			Western, M15Plus, and the duration and totalcopies both 2147483647. Then 
+			the unit test calls Insert on the MovieCollection and passes the movie 
+			as a parameter and asserts that the returned value is equal to true.\\
+			\\
+			The fourth test ensures that the Insert method returns false when the 
+			movie being inserted already exists in the MovieCollection. It achieves 
+			this by creating a MovieCollection and a movie with the parameters: 
+			"A", Action, G, 1, 1. Then the unit test inserts the movie into the 
+			MovieCollection once, ensures that the returned value is true, and 
+			then inserts the movie into the MovieCollection again and asserts 
+			that the returned value is false.\\
+
+		\subsection{Delete Method Testing}
+			To test the Delete method I created three XUnit tests. The first test 
+			ensures that the method returns true when the movie has successfully 
+			been deleted. It achieves this by creating a MovieCollection and a 
+			movie with the parameters: "A", Action, G, 1, 1. Then the unit test 
+			inserts the movie into the MovieCollection, ensuring that the returned 
+			value is true, and then, deletes the same movie from the MovieCollection 
+			and asserts that the returned value is again true.\\
+			\\
+			The second test ensures that the Delete method returns false when the 
+			MovieCollection is empty. It achieves this by creating an empty 
+			MovieCollection and a movie with the parameters: "A", Action, G, 1, 1. 
+			Then the unit test calls Delete on the MovieCollection and passes the 
+			movie as a parameter and asserts that the returned value is equal to 
+			false.\\
+			\\
+			The third and final test ensures that the Delete method returns false 
+			when the movie being deleted does not exist in the MovieCollection. 
+			It achieves this by creating a MovieCollection and a movie with the 
+			parameters: "A", Action, G, 1, 1. Then the unit test inserts the movie 
+			into the MovieCollection, ensuring that the returned value is true, 
+			and then, attempts to delete a different movie from the MovieCollection 
+			(with the parameters: "B", Action, G, 1, 1) and asserts that the returned 
+			value is false.\\
 
 		\subsection{NoDVDs Method Testing}
 			To test the NoDVDs method I created three XUnit tests. The first test 
 			ensures that the method returns 0 when the MovieCollection is empty. 
-			It achives this by creating an empty MovieCollection and asserting that 
+			It achieves this by creating an empty MovieCollection and asserting that 
 			when the NoDVDs method is called on the MovieCollection, it returns 0. 
 			This can also be considered the minimum boundary test.\\ 
 			\\
 			The second test ensures that NoDVDs returns the correct number of DVDs under 
-			normal circumstances. To achive this the unit test creates a MovieCollection 
+			normal circumstances. To achieve this the unit test creates a MovieCollection 
 			and then populates it with two movies each with 1000 totalDVDs. Then, the 
 			unit test asserts that the the returned value of NoDVDs is equal to 2000.\\
 			\\

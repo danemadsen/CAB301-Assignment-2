@@ -181,7 +181,7 @@ public class MovieCollectionTests
     public void DeleteTest_EmptyCollectionFailure()
     {
         MovieCollection mc = new MovieCollection();
-        Assert.False(mc.Delete(new Movie("B", MovieGenre.Action, MovieClassification.G, 1, 1)));
+        Assert.False(mc.Delete(new Movie("A", MovieGenre.Action, MovieClassification.G, 1, 1)));
     }
 
     [Fact]
