@@ -234,6 +234,7 @@
 			value is true, and then, deletes the same movie from the MovieCollection 
 			and asserts that the returned value is again true.\\
 			\\
+			\\
 			The second test ensures that the Delete method returns false when the 
 			MovieCollection is empty. It achieves this by creating an empty 
 			MovieCollection and a movie with the parameters: "A", Action, G, 1, 1. 
@@ -249,6 +250,23 @@
 			and then, attempts to delete a different movie from the MovieCollection 
 			(with the parameters: "B", Action, G, 1, 1) and asserts that the returned 
 			value is false.\\
+
+		\subsection{Search Method Testing}
+			To test the Search method I created two XUnit tests. The first test 
+			ensures that the method returns the correct movie when the movie being 
+			searched for exists in the MovieCollection. It achieves this by first 
+			creating a MovieCollection and then a movie with the parameters: "A", 
+			Action, G, 1, 1. Then the unit test inserts the movie into the 
+			MovieCollection. Finally, the unit test calls Search on the 
+			MovieCollection and passes "A" as a parameter (the title of the movie) 
+			and asserts that the value returned is equal to the movie that was 
+			inserted.\\
+			\\
+			The second test ensures that the Search method returns null when the 
+			movie being searched for does not exist in the MovieCollection. It 
+			achieves this by creating a MovieCollection and then immediately 
+			calling Search on the MovieCollection with "A" as a parameter. Then 
+			the unit test asserts that the value returned is equal to null.\\
 
 		\subsection{NoDVDs Method Testing}
 			To test the NoDVDs method I created three XUnit tests. The first test 
@@ -268,6 +286,30 @@
 			each with half the maximum integer value (2147483647) minus one (1073741823, 
 			because the maxint is odd) as their totalDVDs. Then, the unit test asserts 
 			that the returned value of NoDVDs is equal to the maximum integer value 
-			minus one.\\ 
+			minus one.\\
+
+		\subsection{ToArray Method Testing}
+			To test the ToArray method I created two XUnit tests. The first test ensures 
+			that the ToArray method returns an empty array when the MovieCollection is empty. 
+			It achieves this by creating an empty MovieCollection and then asserting that the 
+			returned array is equal to a user defined empty array.\\
+			\\
+			The second test ensures that the method returns the correct array when the 
+			ToArray method is called. It achieves this by creating a MovieCollection 
+			and then populating it with two movies. Then, the unit test asserts that 
+			the returned array is equal to a user defined array with the same movies.\\
+
+		\subsection{Clear Method Testing}
+			To test the Clear method I created two XUnit tests. The first test ensures 
+			that the method functions when the MovieCollection is empty. It achieves 
+			this by creating an empty MovieCollection, asserting that it is empty, and 
+			then calling Clear on the MovieCollection and asserting again that it is 
+			empty.\\
+			\\
+			The second test ensures that the method functions when the MovieCollection 
+			is not empty. It achieves this by creating a MovieCollection and then 
+			populating it with a movie. Then, the unit test asserts that the MovieCollection 
+			is not empty, calls Clear on the MovieCollection, and asserts that the 
+			MovieCollection is empty.\\
 
 \end{document}
