@@ -2,12 +2,7 @@ using Xunit;
 using System;
 
 public class Test
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello World!");
-    }
-    
+{ 
     [Fact]
     public void CompareToTest()
     {
