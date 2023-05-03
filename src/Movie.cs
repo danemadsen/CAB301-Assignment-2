@@ -51,14 +51,6 @@ public class Movie : IMovie
     //get and set the total number of DVDs of this movie in the library
     public int TotalCopies { get { return totalcopies; } set { totalcopies = value;  } }
 
-
-
-
-    //This movie's title is compared to another movie's title 
-    //Pre-condition: nil
-    //Post-condition:  return -1, if this movie's title is less than another movie's title by dictionary order
-    //                 return 0, if this movie's title equals to another movie's title by dictionary order
-    //                 return +1, if this movie's title is greater than another movie's title by dictionary order
     public int CompareTo(IMovie another)
     {
         int min = Math.Min(title.Length, another.Title.Length);
@@ -74,9 +66,6 @@ public class Movie : IMovie
         else return 0;
     }
 
-    //Return a string containing the title, genre, classification, duration, and the number of copies of this movie currently in the library 
-    //Pre-condition: nil
-    //Post-condition: A string containing the title, genre, classification, duration, and the number of available copies of this movie has been returned
     public override string ToString()
     {
         string result = "{\"title\":\"" + title + "\",";
