@@ -99,7 +99,8 @@ public class Movie : IMovie
         }
         
         result += "\"duration\":" + duration + ",";
-        result += "\"availableCopies\":" + availablecopies + "}";
+        result += "\"availableCopies\":" + availablecopies + ",";
+        result += "\"totalCopies\":" + totalcopies + "}";
         return result;
     }
 }
